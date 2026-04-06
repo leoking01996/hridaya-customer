@@ -1,0 +1,92 @@
+<?php
+require 'vendor/autoload.php';
+
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
+
+header("Content-Type: application/json");
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST");
+
+$secretKey = "MY_SUPER_SECRET_KEY";
+
+// DB connection
+$conn = new mysqli("localhost", "db_user", "db_pass", "db_name");
+if ($conn->connect_error) {
+    http_response_code(500);
+    echo json_encode(["success" => false, "message" => "DB connection failed"]);
+    exit;
+}
+
+// Read input
+$input = json_decode(file_get_contents("php://input"), true);
+$email = $input['email'] ?? '';
+$password = $input['password'] ?? '';
+
+if (!$email || !$password) {
+    http_response_code(400);
+    echo json_encode(["success" => false, "message" => "Email and password required"]);
+    exit;
+}
+
+// Fetch user
+$stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
+$stmt->bind_param("s", $email);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
+    http_response_code(401);
+    echo json_encode(["success" => false, "message" => "Invalid credentials"]);
+    exit;
+}
+
+$user = $result->fetch_assoc();
+
+// Verify password
+if (!password_verify($password, $user['password'])) {
+    http_response_code(401);
+    echo json_encode(["success" => false, "message" => "Invalid credentials"]);
+    exit;
+}
+
+// JWT payloads
+$issuedAt = time();
+
+$accessPayload = [
+    "token_type" => "access",
+    "iat" => $issuedAt,
+    "exp" => $issuedAt + (60 * 15), // 15 minutes
+    "jti" => bin2hex(random_bytes(16)),
+    "user_id" => (string)$user['id']
+];
+
+$refreshPayload = [
+    "token_type" => "refresh",
+    "iat" => $issuedAt,
+    "exp" => $issuedAt + (60 * 60 * 24 * 30), // 30 days
+    "jti" => bin2hex(random_bytes(16)),
+    "user_id" => (string)$user['id']
+];
+
+$accessToken  = JWT::encode($accessPayload, $secretKey, 'HS256');
+$refreshToken = JWT::encode($refreshPayload, $secretKey, 'HS256');
+
+// Final response
+echo json_encode([
+    "success" => true,
+    "message" => "Login successful",
+    "is_verified" => (bool)$user['is_verified'],
+    "data" => [
+        "refresh" => $refreshToken,
+        "access" => $accessToken,
+        "full_name" => $user['full_name'],
+        "email" => $user['email'],
+        "phone_no" => $user['phone_no'],
+        "date_of_birth" => $user['date_of_birth'],
+        "totp_required" => false,
+        "type" => $user['type'],
+        "permissions" => [],
+        "auth_type" => $user['auth_type']
+    ]
+]);

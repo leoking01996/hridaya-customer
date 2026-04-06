@@ -1,0 +1,82 @@
+/* Overlay */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+  padding: env(safe-area-inset-top)
+           env(safe-area-inset-right)
+           env(safe-area-inset-bottom)
+           env(safe-area-inset-left);
+}
+
+/* Modal container */
+.popup-container {
+  background: #fff;
+  width: 100%;
+  max-width: 420px;
+  max-height: 85vh;
+  margin: 0 12px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  animation: popupFade 0.25s ease;
+}
+
+/* Header */
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #eee;
+}
+
+.popup-title {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+/* Body (scrollable on small screens) */
+.popup-body {
+  padding: 16px;
+  overflow-y: auto;
+  font-size: 0.95rem;
+}
+
+/* Close button */
+.close-btn {
+  border: none;
+  background: none;
+  font-size: 22px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .popup-container {
+    max-width: 500px;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .popup-container {
+    max-width: 600px;
+  }
+}
+
+@keyframes popupFade {
+  from {
+    transform: scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

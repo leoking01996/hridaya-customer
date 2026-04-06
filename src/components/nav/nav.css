@@ -1,0 +1,92 @@
+.logo {
+    width: 60px;
+    height: 60px;
+}
+
+.txt-small {
+    font-size: 16px;
+}
+
+.info-box {
+    border: 1px solid black;
+    pointer-events: none;
+}
+
+.category:hover {
+    .info-box {
+        color: red;
+    }
+}
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f4f6f8;
+  padding: 16px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Toggle */
+.auth-toggle {
+  display: flex;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.auth-toggle button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+  font-weight: 500;
+}
+
+.auth-toggle .active {
+  background: #ffc107;
+  color: #000;
+}
+
+/* Forms */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.auth-form h3 {
+  text-align: center;
+}
+
+.auth-form input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.auth-form button {
+  padding: 10px;
+  border-radius: 6px;
+  border: none;
+  background: #ffc107;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 16px;
+  }
+}
