@@ -39,7 +39,7 @@ const [productLists, setProducts] = useState<ProductList[]>([]);
     const [title, setTitle] = useState<string>(categoryTitleMap[category]);
 
     useEffect(() => {
-        console.log()
+        console.log(category)
         switch (category) {
             case "Soy Wax":
 
@@ -57,7 +57,6 @@ const [productLists, setProducts] = useState<ProductList[]>([]);
 
                 break;
             case "Gel Wax":
-                alert()
                 setProductData(gelWaxProducts);
                 fetchProductsAsync('gel');
 
@@ -65,6 +64,11 @@ const [productLists, setProducts] = useState<ProductList[]>([]);
             case "Our Special Candles":
                 setProductData(specialProducts);
                 fetchProductsAsync('special');
+
+                break;
+                case "Sarita Baidhya":
+                setProductData(specialProducts);
+                fetchProductsAsync('sbdya');
 
                 break;
             default:

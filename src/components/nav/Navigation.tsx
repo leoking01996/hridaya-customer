@@ -46,34 +46,6 @@ const [categoryList, setCategoryList] = useState<Category[]>([]);
 
     return stored ? JSON.parse(stored) : null;     
   });
-  
-  const categories = [
-    {
-      key: "Soy Wax",
-      label: "Soy Wax",
-      description: "Premium soy wax candles made from natural ingredients, clean burn, and eco-friendly.",
-    },
-    {
-      key: "Paraffin Wax",
-      label: "Paraffin Wax",
-      description: "Affordable candles with vibrant colors and smooth finish using premium paraffin wax.",
-    },
-    {
-      key: "Edible Candles",
-      label: "Edible Candles",
-      description: "Delicious edible candles made with food-grade ingredients — safe and fun for parties.",
-    },
-    {
-      key: "Gel Wax",
-      label: "Gel Candles",
-      description: "Transparent and artistic gel wax candles perfect for creative displays.",
-    },
-    {
-      key: "Our Special Candles",
-      label: "Our Special Candles",
-      description: "Our signature collection of handcrafted designs with unique scents and shapes.",
-    },
-  ];
 
   const { cartCount } = useCart();
   useEffect(() => {
@@ -212,7 +184,7 @@ const logout =()=>{
       <div key={cat.id} className="relative group">
         <NavLink
           to="products_"
-          state={{ category: cat.typename }}
+          state={{category:cat.typename}}
           className="block px-4 py-3 text-sm tracking-wide hover:bg-accent hover:text-accent-foreground transition-colors"
         >
           {cat.typename}
@@ -360,42 +332,7 @@ const logout =()=>{
       </nav>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
- 
-        <div
-          className="relative"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          <div className="text-sm tracking-wider hover:text-accent transition-colors cursor-pointer">
-            CATEGORY
-          </div>
-
-          {isProductsOpen && (
-            <div
-              className="absolute top-full left-0 mt-2 w-56 bg-white border border-gray-300 rounded-md shadow-lg transition-all duration-300"
-              style={{ overflow: "visible" }}
-            >
-              {categories.map((cat) => (
-                <div key={cat.key} className="relative group">
-                  {/* Clickable Category */}
-                  <div
-                    onClick={() => navigate("/products_", { state: { category: cat.key } })}
-                    className="block px-4 py-3 text-sm tracking-wide hover:bg-accent hover:text-accent-foreground cursor-pointer"
-                  >
-                    {cat.label}
-                  </div>
-
-                  {/* Hover Info Box */}
-                  <div className="absolute left-full top-0 ml-2 hidden group-hover:flex w-64 bg-white border border-gray-300 rounded-md shadow-md p-3 text-sm text-gray-700 pointer-events-none">
-                    {cat.description}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
-      )}
+    
     </>
   );
 };
