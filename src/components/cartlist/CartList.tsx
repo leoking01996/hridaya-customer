@@ -5,7 +5,7 @@ import { useCart } from "../cart-context/CartContext";
 import { toast } from "react-toastify";
 import { jsPDF } from "jspdf";
 import logo from '@/assets/logo.png'
-
+import { Download } from "lucide-react";
 
 interface CartItem {
   id: number;
@@ -581,12 +581,13 @@ const selectedTotalPrice = cartList
   <>
     <span className="text-green-600">{getStatus(item.id)}</span>
     {getStatus(item.id) === 'delivered' && (
-     <button
-        onClick={() => downloadPDF( item)}
-        className="ml-3 px-4 py-2 bg-gradient-to-r from-orange-400 to-pink-500 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
-      >
-        Download Bill
-      </button>
+   <button
+  onClick={() => downloadPDF(item)}
+  className="ml-3 px-4 py-2 flex items-center gap-2 bg-gradient-to-r from-orange-400 to-pink-500 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
+>
+  <Download size={18} />
+  <span>Bill</span>
+</button>
     )}
   </>
 ) : (
