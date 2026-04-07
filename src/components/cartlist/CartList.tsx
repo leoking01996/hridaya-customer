@@ -486,16 +486,20 @@ const selectedTotalPrice = cartList
   />
 
   <div className="flex-1 p-5 text-left space-y-2">
-    <h3 className="text-xl font-medium text-foreground">
-      <strong>Product Name:</strong> {item.name}
+    <h3 className=" flex text-xl font-medium text-foreground">
+      <strong className="hidden md:block">Product Name:</strong> {item.name}
     </h3>
     
-<div className="flex">
+<div className="hidden md:block">
+  <div className="flex ">
  <p className=" text-sm me-2"> <strong>size:</strong> {item.size}</p>
     <p className=" text-sm me-2"><strong>Fragrance:</strong> {item.fragrance}</p>
     <p className=" text-sm me-2">  <strong>color: </strong>{item.color}</p>
 </div>
-  <div className="flex"> 
+</div>
+<div className="hidden md:block">
+
+    <div className="flex"> 
      <p className=" text-sm me-2">
      <strong> Quantity:</strong> {item.qty}
     </p> 
@@ -511,6 +515,7 @@ const selectedTotalPrice = cartList
       <strong>Total:</strong> {item.price * item.qty}
     </p>
     </div>
+</div>
 
     <span className="block text-lg font-semibold text-accent mt-2">
       Rs.{item.price.toFixed(2)}
@@ -568,10 +573,31 @@ const selectedTotalPrice = cartList
   </>
 
 )}
-    
+{/* show down load in mobile */}
+     <div className="m-2 block md:hidden">
+    <p className="text-sm">
+  <strong>Status:</strong>{" "}
+{getStatus(item.id) ? (
+  <>
+    <span className="text-green-600">{getStatus(item.id)}</span>
+    {getStatus(item.id) === 'delivered' && (
+     <button
+        onClick={() => downloadPDF( item)}
+        className="ml-3 px-4 py-2 bg-gradient-to-r from-orange-400 to-pink-500 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 hover:scale-105"
+      >
+        Download Bill
+      </button>
+    )}
+  </>
+) : (
+  <span className="text-gray-400">Not Purchased</span>
+)}
+</p>
   </div>
+  </div>
+{/* show down load in dextop */}
   
-  <div className="m-2">
+  <div className="m-2 hidden md:block">
     <p className="text-sm">
   <strong>Status:</strong>{" "}
 {getStatus(item.id) ? (

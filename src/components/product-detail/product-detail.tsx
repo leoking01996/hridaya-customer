@@ -195,28 +195,31 @@ export default function ProductDetail_({}: ProductDetailProps) {
   return (
     <div className="container mx-auto px-4 py-20 flex flex-col lg:flex-row mt-20 gap-12">
       {/* Images */}
-      <div className="lg:w-1/2 flex flex-col lg:flex-row gap-4">
-        <div className="flex flex-col gap-2">
-          {images.map((img: string, idx: number) => (
-            <img
-              key={idx}
-              src={`http://localhost/backend_php_hridaya/hridaya-admin-backend/product-backend/uploads/${img}`}
-              alt={`Thumbnail ${idx}`}
-              className={`w-20 h-20 object-cover rounded-md cursor-pointer border ${
-                mainImage === img ? "border-accent" : "border-gray-200"
-              }`}
-              onClick={() => setMainImage(img)}
-            />
-          ))}
-        </div>
-        <div className="flex-1">
-          <img
-            src={`http://localhost/backend_php_hridaya/hridaya-admin-backend/product-backend/uploads/${mainImage}`}
-            alt={currentVariant?.variant_name}
-            className="w-full h-[400px] object-cover rounded-2xl"
-          />
-        </div>
-      </div>
+ <div className="lg:w-1/2 flex flex-col lg:flex-row gap-4">
+  {/* Main Image */}
+  <div className="flex-1 order-1 lg:order-2">
+    <img
+      src={`http://localhost/backend_php_hridaya/hridaya-admin-backend/product-backend/uploads/${mainImage}`}
+      alt={currentVariant?.variant_name}
+      className="w-full h-[400px] object-cover rounded-2xl"
+    />
+  </div>
+
+  {/* Thumbnails */}
+  <div className="flex flex-row lg:flex-col gap-2 order-2 lg:order-1">
+    {images.map((img: string, idx: number) => (
+      <img
+        key={idx}
+        src={`http://localhost/backend_php_hridaya/hridaya-admin-backend/product-backend/uploads/${img}`}
+        alt={`Thumbnail ${idx}`}
+        className={`w-20 h-20 object-cover rounded-md cursor-pointer border ${
+          mainImage === img ? "border-accent" : "border-gray-200"
+        }`}
+        onClick={() => setMainImage(img)}
+      />
+    ))}
+  </div>
+</div>
 
       {/* Details */}
       <div className="lg:w-1/2 flex flex-col gap-6">
